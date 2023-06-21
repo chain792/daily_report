@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  ldap-server:
+    image: osixia/openldap:latest
+    restart: always
+    container_name: ldap-host
+    environment:
+      LDAP_ORGANISATION: "hogetech_company"
+      LDAP_DOMAIN: "hogetech.com"
+      LDAP_ADMIN_PASSWORD: "hogetech" #cn=admin,dc=hogetech,dc=com のパスワード
+      LDAP_CONFIG_PASSWORD: "hogetech" #cn=admin,cn=config のパスワード
+      LDAP_TLS_VERIFY_CLIENT: "try"
+    networks:
+      - webnet
+    ports:
+      - "389:389"
+      - "636:636"
+
+  ldap-admin:
+    image: osixia/phpldapadmin:latest
+    restart: always
+    container_name: ldap-admin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "ldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8080:80"
+    links:
+      - "ldap-server:ldap"
+    networks:
+      - webnet
+
+networks:
+  webnet:
