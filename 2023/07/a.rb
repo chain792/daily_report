@@ -1,1 +1,7 @@
-p [1,2,3,4,5].partition { |value| value==3 }
+def a
+  <<EOF
+    Hello,
+    Ruby
+  EOF
+end
+p a
