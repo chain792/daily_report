@@ -1,6 +1,5 @@
-def bar(*n1, n2)
-  puts n1
-  puts n2
+File.open('testfile.txt', 'a') do |f|
+  f.write("recode 1\n")
+  f.seek(0, IO::SEEK_SET)
+  f.write("recode 2\n")
 end
-
-bar 5, 6, 7, 8
